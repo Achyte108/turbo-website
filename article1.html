@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Coming Soon | ISC-DIP Turbo</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #0a1128;
+            --dark-navy: #051024;
+            --electric-blue: #0066cc;
+            --light-blue: #00a8e8;
+            --gold: #ffcc00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--navy);
+            color: #e0e0e0;
+            line-height: 1.8;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            text-align: center;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #d0d6ff;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: auto;
+            padding: 150px 0;
+            flex: 1;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 60px;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 10px 22px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            width: max-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .back-link:hover {
+            background: var(--gold);
+            color: var(--navy);
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="container">
+        <h1>Article Coming Soon</h1>
+        <p>Stay tuned! This content will be available shortly.</p>
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </section>
+
+</body>
+</html>
