@@ -883,6 +883,38 @@ body {
     }
 }
 
+/* MOBILE NAV */
+@media (max-width: 768px) {
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        right: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background: var(--dark-navy);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        transition: right 0.35s ease;
+        z-index: 999;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links a {
+        font-size: 1.2rem;
+    }
+
+    .menu-toggle {
+        display: block;
+        color: white;
+    }
+}
+
+
 
 }
 </style>
@@ -903,7 +935,7 @@ body {
       <div class="evgp-countdown">
         <span class="evgp-label">Countdown to EVGP</span>
         <div class="countdown-inline">
-          <div><span id="days">49</span><small>d</small></div>
+          <div><span id="days">30</span><small>d</small></div>
           <div><span id="hours">04</span><small>h</small></div>
           <div><span id="minutes">49</span><small>m</small></div>
           <div><span id="seconds">47</span><small>s</small></div>
@@ -912,18 +944,20 @@ body {
     </div>
 
     
-    <ul class="nav-links">
-      <li><a href="#" class="nav-link" data-target="home">Home</a></li>
-      <li><a href="#mission" class="scroll-link">Mission</a></li>
-      <li><a href="#goals" class="scroll-link">Goals</a></li>
-      <li><a href="team.html">Crew</a></li>
-      <li><a href="#footer" class="scroll-link">Contact</a></li>
-      <li><a href="journey.html">Timeline</a></li>
-    </ul>
+    <ul class="nav-links" id="mobileMenu">
+    <li><a href="#" class="nav-link" data-target="home">Home</a></li>
+    <li><a href="#mission" class="scroll-link">Mission</a></li>
+    <li><a href="#goals" class="scroll-link">Goals</a></li>
+    <li><a href="team.html">Crew</a></li>
+    <li><a href="#footer" class="scroll-link">Contact</a></li>
+    <li><a href="journey.html">Timeline</a></li>
+</ul>
 
-    <div class="menu-toggle">
+
+    <div class="menu-toggle" id="menuToggle">
     <i class="fas fa-bars"></i>
 </div>
+
 
 
   </div>
@@ -1287,11 +1321,31 @@ startCountdown();
             observer.observe(card);
         });
 
+        const menuToggle = document.getElementById("menuToggle");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuToggle.addEventListener("click", () => {
+    mobileMenu.classList.toggle("active");
+    menuToggle.innerHTML = mobileMenu.classList.contains("active")
+        ? '<i class="fas fa-times"></i>'
+        : '<i class="fas fa-bars"></i>';
+});
+
+
+document.querySelectorAll("#mobileMenu a").forEach(link => {
+    link.addEventListener("click", () => {
+        mobileMenu.classList.remove("active");
+        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+    });
+});
+s
+
 
     </script>
 </body>
 
 </html>
+
 
 
 
