@@ -1151,7 +1151,13 @@ body {
         </div>
     </a>
 
+<div id="chatbox">
+  <div id="messages"></div>
+  <input id="msg" placeholder="Ask me something..." />
+  <button onclick="send()">Send</button>
+</div>
 
+    
 </div>
 
 
@@ -1177,6 +1183,7 @@ body {
     </a>
 </div>
 
+            
                
 
             </div>
@@ -1340,11 +1347,38 @@ document.querySelectorAll("#mobileMenu a").forEach(link => {
     });
 });
 
+        <script>
+  const API_URL = "https://chatbot-backend.vercel.app/api/chat";
+
+  async function send() {
+    const input = document.getElementById("msg");
+    const text = input.value.trim();
+    if (!text) return;
+
+    document.getElementById("messages").innerHTML +=
+      `<p><b>You:</b> ${text}</p>`;
+
+    input.value = "";
+
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
+    });
+
+    const data = await res.json();
+
+    document.getElementById("messages").innerHTML +=
+      `<p><b>Bot:</b> ${data.reply}</p>`;
+  }
+</script>
+
 
     </script>
 </body>
 
 </html>
+
 
 
 
