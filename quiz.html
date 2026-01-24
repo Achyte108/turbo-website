@@ -207,6 +207,8 @@ const scoreText = document.getElementById("scoreText");
 
 let index = 0;
 let score = 0;
+let userAnswers = [];
+
 
 function loadQuestion() {
     nextBtn.style.display = "none";
@@ -226,6 +228,13 @@ function loadQuestion() {
 }
 
 function selectAnswer(btn, correct) {
+    const selectedText = btn.textContent;
+
+    userAnswers[index] = {
+        selected: selectedText,
+        correct: correct
+    };
+
     if (correct) {
         btn.classList.add("correct");
         score++;
@@ -237,30 +246,61 @@ function selectAnswer(btn, correct) {
     nextBtn.style.display = "inline-block";
 }
 
-nextBtn.onclick = () => {
+function nextQuestion() {
     index++;
     if (index < questions.length) {
         loadQuestion();
     } else {
         showScore();
     }
-};
+}
+
+nextBtn.onclick = nextQuestion;
 
 function showScore() {
-    questionEl.textContent = `You scored ${score}/${questions.length}`;
+    questionEl.textContent = `Final Score: ${score}/${questions.length}`;
     answersEl.innerHTML = "";
+
+    questions.forEach((q, i) => {
+        const correctAnswer = q.a.find(a => a.c).t;
+        const userAnswer = userAnswers[i];
+
+        const resultDiv = document.createElement("div");
+        resultDiv.style.marginBottom = "18px";
+        resultDiv.style.textAlign = "left";
+
+        resultDiv.innerHTML = `
+            <strong>Q${i + 1}: ${q.q}</strong><br>
+            Your answer:
+            <span style="color:${userAnswer.correct ? 'var(--gold)' : '#dc2626'}">
+                ${userAnswer.selected}
+            </span><br>
+            Correct answer:
+            <span style="color:var(--light-blue)">
+                ${correctAnswer}
+            </span>
+        `;
+
+        answersEl.appendChild(resultDiv);
+    });
+
     scoreText.textContent =
         score === questions.length
-        ? "Good job! You're officially a motorsport pro!"
-        : "Good run, but try again...";
+        ? "You got a perfect score. NICE!"
+        : "Good enough, try again for a better score!";
+
     nextBtn.textContent = "RESTART";
     nextBtn.style.display = "inline-block";
-    nextBtn.onclick = () => {
-        index = 0;
-        score = 0;
-        nextBtn.textContent = "NEXT";
-        loadQuestion();
-    };
+   nextBtn.onclick = () => {
+    index = 0;
+    score = 0;
+    userAnswers = [];
+    nextBtn.textContent = "NEXT";
+
+    nextBtn.onclick = nextQuestion;
+    loadQuestion();
+};
+
 }
 
 loadQuestion();
