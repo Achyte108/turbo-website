@@ -253,13 +253,43 @@
             max-width: 700px;
             z-index: 1;
         }
+
+        .hero {
+    background-size: 200% 200%;
+    animation: gridMove 25s linear infinite;
+}
+
+
+
+
+@keyframes gridMove {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
         
         /*Mission*/
-        .mission {
-            padding: 100px 0;
-            background-color: var(--dark-navy);
-            position: relative;
-        }
+       .mission,
+.goals {
+    padding: 100px 0;
+    background: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+.mission::before,
+.goals::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(5, 16, 36, 0.75);
+    z-index: -1;
+}
+
         
         .section-title {
             text-align: center;
@@ -342,11 +372,7 @@
         }
         
         /*Goals*/
-        .goals {
-            padding: 100px 0;
-            background-color: var(--navy);
-        }
-        
+       
 .goals-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -840,7 +866,7 @@ body {
     display: flex;
     gap: 16px;
     margin-top: 20px;
-}
+}}
 
 .social-btn {
     width: 44px;
@@ -914,13 +940,66 @@ body {
     }
 }
 
-
-
+#particles-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
 }
+
+.parallax {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.glow-bg {
+    position: relative;
+}
+
+.glow-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(0,168,232,0.15), transparent 70%);
+    animation: glowPulse 6s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+.hero,
+.mission,
+.goals,
+footer {
+    position: relative;
+    z-index: 1;
+}
+
+.section-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(
+        to bottom,
+        rgba(5,16,36,0),
+        rgba(5,16,36,0.9)
+    );
+    pointer-events: none;
+}
+
+
 </style>
 
 </head>
 <body>
+    <div id="particles-bg"></div>
+
 <header>
   <div class="container nav-container">
 
@@ -963,24 +1042,20 @@ body {
   </div>
 </header>
 
-     
+<div class="hero glow-bg parallax" id="home">
+  <div class="container">
+    <div class="hero-content">
+      <h1>ISC-DIP <span>Turbo Electric Car Team</span></h1>
+      <p>Pushing the limits of creativity and engineering to build the most efficient electric kart.</p>
+      <div class="hero-btns">
+        <a href="journey.html" class="btn">Our Journey</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-    
-    <section id="home" class="page-section active">
-        
-        <div class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h1>ISC-DIP <span>Turbo Electric Car Team</span></h1>
-                    <p>Pushing the limits of creativity and engineering to build the most efficient electric kart.</p>
-                    <div class="hero-btns">
-                        <button class="btn btn-gold">Learn More</button>
-                        <a href="journey.html" class="btn">Our Journey</a>
-                    </div>
-                </div>
-            </div>
-           
-        </div>
+<div class="section-fade"></div>
+
 
         
         <div class="mission" id="mission">
@@ -1160,12 +1235,8 @@ body {
     
 </div>
 
-
-    </section>
-
    
- 
-  
+
 <footer id="footer">
     <div class="container">
         <div class="footer-content">
@@ -1188,7 +1259,7 @@ body {
 
             </div>
             <div class="footer-links">
-                <h4>Quick Navigation</h4>
+                <h4>Navigation</h4>
                 <ul>
                     <li><a href="#" class="nav-link" data-target="home">Home</a></li>
                     <li><a href="#mission" class="scroll-link">Our Mission</a></li>
@@ -1348,37 +1419,40 @@ document.querySelectorAll("#mobileMenu a").forEach(link => {
 });
 
     
-const API_URL = "https://turboaibackend.vercel.app/api/chat";
+</script>
 
+ <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
 
-  async function send() {
-    const input = document.getElementById("msg");
-    const text = input.value.trim();
-    if (!text) return;
-
-    document.getElementById("messages").innerHTML +=
-      `<p><b>You:</b> ${text}</p>`;
-
-    input.value = "";
-
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text })
-    });
-
-    const data = await res.json();
-
-    document.getElementById("messages").innerHTML +=
-      `<p><b>Bot:</b> ${data.reply}</p>`;
+<script>
+tsParticles.load("particles-bg", {
+  particles: {
+    number: { value: 80 },
+    color: { value: ["#ffcc00", "#00a8e8"] },
+    shape: { type: "circle" },
+    opacity: { value: 0.4 },
+    size: { value: { min: 1, max: 3 } },
+    move: {
+      enable: true,
+      speed: 0.6,
+      direction: "none",
+      outModes: "out"
+    },
+    links: {
+      enable: true,
+      color: "#0066cc",
+      opacity: 0.2,
+      distance: 150
+    }
   }
+});
+</script>
 
 
 
-    </script>
 </body>
 
 </html>
+
 
 
 
